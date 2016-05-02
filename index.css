@@ -1,0 +1,525 @@
+html * {
+  box-sizing: border-box;
+}
+
+.CodeMirror {
+  /* Set height, width, borders, and global font properties here */
+  font-family: monospace;
+}
+
+.CodeMirror-scroll {
+  /* Set scrolling behaviour here */
+  overflow: auto;
+}
+
+/* PADDING */
+
+.CodeMirror-lines {
+  padding: 14px 0; /* Vertical padding around content */
+}
+
+.CodeMirror pre {
+  padding: 0 14px; /* Horizontal padding of content */
+}
+
+.CodeMirror-scrollbar-filler {
+  background-color: white; /* The little square between H and V scrollbars */
+}
+
+/* GUTTER */
+
+.CodeMirror-gutters {
+  border-right: 1px solid #ddd;
+  background-color: #f7f7f7;
+}
+
+.CodeMirror-linenumbers {
+}
+
+.CodeMirror-linenumber {
+  min-width: 20px;
+  padding: 0 3px 0 5px;
+  text-align: right;
+  color: #999;
+}
+
+/* CURSOR */
+
+.CodeMirror div.CodeMirror-cursor {
+  border-left: 1px solid black;
+}
+/* Shown when moving in bi-directional text */
+
+.CodeMirror div.CodeMirror-secondarycursor {
+  border-left: 1px solid silver;
+}
+
+.CodeMirror.cm-keymap-fat-cursor div.CodeMirror-cursor {
+  width: auto;
+  border: 0;
+  background: transparent;
+  background: rgba(0, 200, 0, .4);
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#6600c800, endColorstr=#4c00c800);
+}
+/* Kludge to turn off filter in ie9+, which also accepts rgba */
+
+.CodeMirror.cm-keymap-fat-cursor div.CodeMirror-cursor:not(#nonsense_id) {
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+/* Can style cursor different in overwrite (non-insert) mode */
+
+.CodeMirror div.CodeMirror-cursor.CodeMirror-overwrite {
+}
+
+/* DEFAULT THEME */
+
+.cm-s-default .cm-keyword {
+  color: #708;
+}
+
+.cm-s-default .cm-atom {
+  color: #219;
+}
+
+.cm-s-default .cm-number {
+  color: #164;
+}
+
+.cm-s-default .cm-def {
+  color: #00f;
+}
+
+.cm-s-default .cm-variable {
+  color: black;
+}
+
+.cm-s-default .cm-variable-2 {
+  color: #05a;
+}
+
+.cm-s-default .cm-variable-3 {
+  color: #085;
+}
+
+.cm-s-default .cm-property {
+  color: black;
+}
+
+.cm-s-default .cm-operator {
+  color: black;
+}
+
+.cm-s-default .cm-comment {
+  color: #a50;
+}
+
+.cm-s-default .cm-string {
+  color: #a11;
+}
+
+.cm-s-default .cm-string-2 {
+  color: #f50;
+}
+
+.cm-s-default .cm-meta {
+  color: #555;
+}
+
+.cm-s-default .cm-error {
+  color: #f00;
+}
+
+.cm-s-default .cm-qualifier {
+  color: #555;
+}
+
+.cm-s-default .cm-builtin {
+  color: #30a;
+}
+
+.cm-s-default .cm-bracket {
+  color: #997;
+}
+
+.cm-s-default .cm-tag {
+  color: #170;
+}
+
+.cm-s-default .cm-attribute {
+  color: #00c;
+}
+
+.cm-s-default .cm-header {
+  color: blue;
+}
+
+.cm-s-default .cm-quote {
+  color: #090;
+}
+
+.cm-s-default .cm-hr {
+  color: #999;
+}
+
+.cm-s-default .cm-link {
+  color: #00c;
+}
+
+.cm-negative {
+  color: #d44;
+}
+
+.cm-positive {
+  color: #292;
+}
+
+.cm-header,
+.cm-strong {
+  font-weight: bold;
+}
+
+.cm-em {
+  font-style: italic;
+}
+
+.cm-emstrong {
+  font-weight: bold;
+  font-style: italic;
+}
+
+.cm-link {
+  text-decoration: underline;
+}
+
+.cm-invalidchar {
+  color: #f00;
+}
+
+div.CodeMirror span.CodeMirror-matchingbracket {
+  color: #0f0;
+}
+
+div.CodeMirror span.CodeMirror-nonmatchingbracket {
+  color: #f22;
+}
+
+/* STOP */
+
+/* The rest of this file contains styles related to the mechanics of
+   the editor. You probably shouldn't touch them. */
+
+.CodeMirror {
+  line-height: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.CodeMirror-scroll {
+  position: relative;
+  height: 100%;
+  margin-right: -30px;
+  /* 30px is the magic margin used to hide the element's real scrollbars */
+  /* See overflow: hidden in .CodeMirror, and the paddings in .CodeMirror-sizer */
+  margin-bottom: -30px;
+  padding-right: 30px;
+  padding-bottom: 30px;
+  outline: none; /* Prevent dragging from highlighting the element */
+}
+
+.CodeMirror-sizer {
+  position: relative;
+}
+
+/* The fake, visible scrollbars. Used to force redraw during scrolling
+   before actuall scrolling happens, thus preventing shaking and
+   flickering artifacts. */
+
+.CodeMirror-vscrollbar,
+.CodeMirror-hscrollbar,
+.CodeMirror-scrollbar-filler {
+  position: absolute;
+  z-index: 6;
+  display: none;
+}
+
+.CodeMirror-vscrollbar {
+  top: 0;
+  right: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.CodeMirror-hscrollbar {
+  bottom: 0;
+  left: 0;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.CodeMirror-scrollbar-filler {
+  z-index: 6;
+  right: 0;
+  bottom: 0;
+}
+
+.CodeMirror-gutters {
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+.CodeMirror-gutter {
+  display: inline-block;
+  height: 100%;
+  /* Hack to make IE7 behave */
+
+  *zoom: 1;
+  *display: inline;
+}
+
+.CodeMirror-gutter-elt {
+  position: absolute;
+  z-index: 4;
+  cursor: default;
+}
+
+.CodeMirror-lines {
+  cursor: text;
+}
+
+.CodeMirror pre {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+  margin: 0;
+  white-space: pre;
+  word-wrap: normal;
+  color: inherit;
+  border-width: 0;
+  -webkit-border-radius: 0;
+  /* Reset some styles that the rest of the page might have set */
+  -moz-border-radius: 0;
+  border-radius: 0;
+  background: transparent;
+
+  -o-border-radius: 0;
+}
+
+.CodeMirror-wrap pre {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  word-break: normal;
+}
+
+.CodeMirror-linebackground {
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.CodeMirror-linewidget {
+  position: relative;
+  z-index: 2;
+  overflow: auto;
+}
+
+.CodeMirror-wrap .CodeMirror-scroll {
+  overflow-x: hidden;
+}
+
+.CodeMirror-measure {
+  position: absolute;
+  visibility: hidden;
+  overflow: hidden;
+  width: 100%;
+  height: 0;
+}
+
+.CodeMirror-measure pre {
+  position: static;
+}
+
+.CodeMirror div.CodeMirror-cursor {
+  position: absolute;
+  visibility: hidden;
+  width: 0;
+  border-right: none;
+}
+
+.CodeMirror-focused div.CodeMirror-cursor {
+  visibility: visible;
+}
+
+.CodeMirror-selected {
+  background: #d9d9d9;
+}
+
+.CodeMirror-focused .CodeMirror-selected {
+  background: #d7d4f0;
+}
+
+.cm-searching {
+  background: #ffa;
+  background: rgba(255, 255, 0, .4);
+}
+
+/* IE7 hack to prevent it from returning funny offsetTops on the spans */
+
+.CodeMirror span {
+  *vertical-align: text-bottom;
+}
+
+@media print {
+  /* Hide the cursor when printing */
+
+  .CodeMirror div.CodeMirror-cursor {
+    visibility: hidden;
+  }
+}
+
+body {
+  box-sizing: border-box;
+  padding: 20px;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+.main-container {
+  position: relative;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(100% - 150px) ;
+  padding: 22px 0 0 0;
+}
+
+h1 {
+  font-family: Consolas, Monaco, Monospace;
+  font-size: 36px;
+  margin: 17px 0 33px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+h1 a {
+  padding: 10px 15px 7px;
+  text-decoration: none;
+  color: #fff;
+  background: rgb(56, 159, 203);
+}
+
+#source-area,
+#result-area {
+  font-family: Consolas, Monaco, Monospace;
+  font-size: 13px;
+  line-height: 1em;
+  overflow: auto;
+  flex: 1;
+  min-height: 500px;
+  margin: 0;
+  border: 1px solid #aaa;
+}
+
+#source {
+  font-family: Consolas, Monaco, Monospace;
+  font-size: 13px;
+  line-height: 1em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  overflow: auto;
+  padding: 5px 10px;
+  color: #fff;
+  background: rgb(203, 68, 68);
+}
+
+#result {
+  font-family: Consolas, Monaco, Monospace;
+  font-size: 13px;
+  line-height: 1em;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  padding: 5px 10px;
+  color: #fff;
+  background: rgb(116, 178, 116);
+}
+
+.button span {
+  font-family: Consolas, Monaco, Monospace;
+  font-size: 13px;
+  line-height: 1em;
+  display: block;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #fff;
+  background: rgb(56, 159, 203);
+}
+
+.button {
+  display: block;
+  background: rgba(100,100,100,.2);
+}
+
+#btn-config {
+  position: absolute;
+  top: 0;
+  right: 50%;
+}
+
+#btn-restore {
+  position: absolute;
+  z-index: 99;
+  right: 20px;
+  bottom: 15px;
+}
+
+.panel {
+  position: absolute;
+  z-index: 20;
+  top: 20px;
+  left: 0;
+  display: none;
+  width: 50%;
+  height: 95%;
+  padding: 20px 20px 50px;
+  background: #eee;
+}
+
+.panel.panel-open {
+  display: block;
+}
+
+.CodeMirror.cm-s-default {
+  flex: 1;
+  height: 100%;
+  border: 1px solid #aaa;
+  background: #fff;
+}
+
+.CodeMirror pre {
+  font-family: Consolas, Monaco, Monospace;
+  font-size: 13px;
+}
+
+.CodeMirror.cm-s-default .cm-string-2 {
+  color: #2a2523;
+}
+.credits {
+  font-family: Consolas, Monaco, Monospace;
+  font-size: 14px;
+  padding: 10px 7px 6px;
+}
